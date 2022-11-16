@@ -1,14 +1,11 @@
 import './App.css';
 import TodoList from './todoList/TodoList';
 
-const dummyData = [
-
-];
-
 function App() {
   return (
     <div className="App">
-      <TodoList items={[]}/>
+      <h1>TODO List</h1>
+      <TodoList/>
     </div>
   );
 }

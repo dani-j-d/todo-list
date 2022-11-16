@@ -1,21 +1,23 @@
-import PropTypes from 'prop-types';
+import React from 'react';
 import TodoItem from '../todoItem/TodoItem';
 
-function TodoList(props) {
+function TodoList() {
+    const [items, setItems] = React.useState([]);
+    const newItem = {
+        title: 'TODO Title',
+        description: 'TODO Description',
+        created: 'Date Created',
+        completed: false,
+    }
+    const addEntry = () => {
+        setItems([...items, newItem]);
+    }
     return (
         <div>
-            {props.items.map(item => <TodoItem {...item}></TodoItem>)}
+            <button onClick={addEntry}>New TODO Item</button>
+            {items.map(item => <TodoItem {...item}/>)}
         </div>
     );
 }
 
-TodoItem.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.shape({
-        title: PropTypes.string,
-        description: PropTypes.string,
-        createdOn: PropTypes.string,
-        status: PropTypes.bool,
-    })),
-  }
-  
 export default TodoList;
