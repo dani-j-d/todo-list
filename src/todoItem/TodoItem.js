@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 
 function TodoItem(props) {
     const [editMode, setEditMode] = React.useState(false);
-  
+    const [title, setTitle] = React.useState('Title Sample');
+
+
+
     if (!editMode) {
       return <Card>
       <button onClick={() => {setEditMode(!editMode)}}>Edit</button>
@@ -19,7 +22,7 @@ function TodoItem(props) {
         <form>
           <label>
             Title:
-            <input type="text" name="title" />
+            <input value={title} onChange={(event) => {setTitle(event.target.value)}} type="text" name="title" />
           </label>
           <label>
             Description:
@@ -30,7 +33,11 @@ function TodoItem(props) {
             <input type="checkbox" name="completed" />
           </label>
           <button onClick={() => {setEditMode(!editMode)}}>Cancel</button>
-          <input onClick={() => {setEditMode(!editMode)}} type="submit" value="Submit" />
+          <input onClick={(event) => {
+            event.preventDefault();
+            props.handleSubmit(props.index, {title: title});
+            setEditMode(false);
+            }} type="submit" value="Submit" />
         </form>
       </Card>
     }
@@ -42,6 +49,7 @@ function TodoItem(props) {
     description: PropTypes.string,
     createdOn: PropTypes.string,
     completed: PropTypes.bool,
+    index: PropTypes.number,
   }
   
 export default TodoItem;
