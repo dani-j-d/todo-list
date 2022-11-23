@@ -1,6 +1,7 @@
 import React from 'react';
-import Card from '@mui/material/Card';
+import { Card, Checkbox, Typography, Button } from '@mui/material';
 import PropTypes from 'prop-types';
+import "./TodoItem.css"
 
 function TodoItem(props) {
     const [editMode, setEditMode] = React.useState(props.editMode);
@@ -9,20 +10,20 @@ function TodoItem(props) {
     const [createdOn, setCreatedOn] = React.useState(props.createdOn);
     const [completed, setCompleted] = React.useState(props.completed);
 
+    const displayContent = () => {
+      return <> 
+        
+        <Typography>{props.title}</Typography>
+        <Typography>{props.createdOn}</Typography>
+        <Typography>{props.description}</Typography>
+        <Button onClick={() => {setEditMode(!editMode)}}>Edit</Button>
+        <Button onClick={(event) => {props.handleDelete(props.index)}}>Delete</Button>
+      </>
+    }
 
-    if (!editMode) {
-      return <Card>
-      <button onClick={() => {setEditMode(!editMode)}}>Edit</button>
-      <span>{editMode.toString()}</span>
-      <span>{props.title}</span>
-      <span>{props.completed.toString()}</span>
-      <span>{props.description}</span>
-      <span>{props.createdOn}</span>
-      <button onClick={(event) => {props.handleDelete(props.index)}}>Delete</button>
-    </Card>
-    } else {
-      return <Card>
-        <form>
+    const displayForm = () => {
+      return <> 
+        <>
           <label>
             Title:
             <input value={title} onChange={(event) => {setTitle(event.target.value)}} type="text" name="title" />
@@ -31,21 +32,20 @@ function TodoItem(props) {
             Description:
             <input value={description} onChange={(event) => {setDescription(event.target.value)}} type="text" name="description" />
           </label>
-          <label>
-            Completed:
-            <input checked={completed} onChange={(event) => {setCompleted(event.target.checked)}} type="checkbox" name="completed" />
-          </label>
-          <button onClick={() => {setEditMode(!editMode)}}>Cancel</button>
-          <input onClick={(event) => {
-            event.preventDefault();
+          <Button onClick={() => {setEditMode(!editMode)}}>Cancel</Button>
+          <Button onClick={() => {
             console.log('compleeted: ', completed)
-            props.handleSubmit(props.index, {title, description, completed});
+            props.handleSubmit(props.index, {title, description, completed, createdOn});
             setEditMode(false);
-            }} type="submit" value="Submit" />
-        </form>
-      </Card>
+            }}>Submit</Button>
+        </>
+      </>
     }
-    
+
+    return <Card className="item-card">
+      <Checkbox checked={completed} onChange={(event) => {setCompleted(event.target.checked)}} />
+      { editMode ? displayForm() : displayContent() }
+    </Card>
   }
 
   TodoItem.propTypes = {

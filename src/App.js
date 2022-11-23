@@ -1,10 +1,12 @@
 import './App.css';
 import TodoList from './todoList/TodoList';
+import { Typography } from '@mui/material';
+
 
 function App() {
   return (
     <div className="App">
-      <h1>TODO List</h1>
+      <Typography>TODO List</Typography>
       <TodoList/>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import TodoItem from '../todoItem/TodoItem';
+import { Button } from '@mui/material';
 
 function TodoList() {
     const [items, setItems] = React.useState([]);
@@ -20,7 +21,7 @@ function TodoList() {
     const newItem = {
         title: 'Title',
         description: 'Description',
-        created: 'Date Created',
+        createdOn: '11/11/2011',
         completed: false,
     }
     const addEntry = () => {
@@ -28,7 +29,7 @@ function TodoList() {
     }
     return (
         <div>
-            <button onClick={addEntry}>New TODO Item</button>
+            <Button onClick={addEntry}>New TODO Item</Button>
             {items.map((item, index) => <TodoItem {...item} handleSubmit={handleSubmit} handleDelete={handleDelete} index={index} editMode={true} key={index}/>)}
         </div>
     );
