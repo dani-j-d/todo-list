@@ -3,15 +3,23 @@ import TodoItem from '../todoItem/TodoItem';
 
 function TodoList() {
     const [items, setItems] = React.useState([]);
+
     const handleSubmit = (index, item) => {
-        const copyOfItems = items;
+        const copyOfItems = [...items];
         copyOfItems.splice(index, 1, item)
         console.log(copyOfItems)
         setItems(copyOfItems);
     }
+
+    const handleDelete = (index) => {
+        const copyOfItems = [...items];
+        copyOfItems.splice(index, 1)
+        console.log(copyOfItems)
+        setItems(copyOfItems);
+    }
     const newItem = {
-        title: 'TODO Title',
-        description: 'TODO Description',
+        title: 'Title',
+        description: 'Description',
         created: 'Date Created',
         completed: false,
     }
@@ -21,7 +29,7 @@ function TodoList() {
     return (
         <div>
             <button onClick={addEntry}>New TODO Item</button>
-            {items.map((item, index) => <TodoItem {...item} handleSubmit={handleSubmit} index={index}/>)}
+            {items.map((item, index) => <TodoItem {...item} handleSubmit={handleSubmit} handleDelete={handleDelete} index={index} editMode={true} key={index}/>)}
         </div>
     );
 }
